@@ -5,11 +5,16 @@ import { Constants, Location, Permissions } from 'expo';
 import { Platform, Text, View, StyleSheet } from 'react-native';
 import styles from './styles';
 import RecommendationsMap from './RecommendationsMap';
+import ReccomendationsMap from './RecommendationsMap';
 
 class MainComponent extends Component {
     state = {
         mapRegion: null,
         gpsAccuracy: null,
+        recommendations: [],
+        lookingFor: null,
+        headerLocation: null,
+        last4sqCall: null
     }
 
     componentWillMount() {
@@ -29,8 +34,9 @@ class MainComponent extends Component {
         let region = {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
+            latitudeDelta: 0.00922 * 1.5,
+            longitudeDelta: 0.00421 * 1.5
         }
-        console.log(region);
         this.onRegionChange(region, location.coords.accuracy);
     };
 
@@ -43,11 +49,11 @@ class MainComponent extends Component {
 
     render() {
         const { mapRegion, lookingFor } = this.state;
-        console.log(mapRegion);
         if (mapRegion) {
             return (
                 <Screen>
-
+                    <RecommendationsMap {...this.state}
+                        onRegionChange={this.onRegionChange.bind(this)} />
                 </Screen>
             );
         } else {
