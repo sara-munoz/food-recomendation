@@ -1,7 +1,8 @@
 import React from 'react';
 import { Font, AppLoading } from 'expo';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import MainComponent from './components/MainComponent';
+import { Examples } from '@shoutem/ui';
 
 export default class App extends React.Component {
   state = {
@@ -32,7 +33,7 @@ export default class App extends React.Component {
     }
 
     return (
-      <MainComponent />
+      <Examples />
     );
   }
 }

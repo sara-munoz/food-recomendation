@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { MapView } from 'expo';
 import styles from './styles';
 import { Title } from '@shoutem/ui';
+import Recommendation from './Recomendation';
+
 
 const RecommendationsMap = ({ mapRegion, gpsAccuracy, recommendations, lookingFor,
     headerLocation, onRegionChange }) => (
@@ -9,13 +11,8 @@ const RecommendationsMap = ({ mapRegion, gpsAccuracy, recommendations, lookingFo
         <MapView initialRegion={mapRegion}
             style={styles.fullscreen}
             onRegionChange={onRegionChange}
-            showsUserLocation={true}
-        >
-
-            <Title styleName="h-center multiline" style={styles.mapHeader}>
-                {lookingFor ? `${lookingFor} in` : ''} {headerLocation}
-            </Title>
-
+            showsUserLocation={true}>
+            <Recommendation/>
         </MapView>
     );
 export default RecommendationsMap;
