@@ -10,7 +10,7 @@ import RecommendationsMap from './RecommendationsMap';
 const CLIENT_ID = '1240MVXTKU0CKWB1MHPUVUFB0OURNQPL5S3TICGBW20JIXND';
 const CLIENT_SECRET = 'Y3CFSGHRV23CKPBI34IZIE4ENGSW3CHDMCYCUDYA01NQMBVM';
 const FOURSQUARE_ENDPOINT = 'https://api.foursquare.com/v2/venues/explore';
-const API_DEBOUNCE_TIME = 2000;
+const API_DEBOUNCE_TIME = 10000;
 
 class MainComponent extends Component {
     state = {
@@ -66,7 +66,7 @@ class MainComponent extends Component {
             .then(fetch.throwErrors)
             .then(res => res.json())
             .then(json => {
-                console.log('json ' + JSON.stringify(json));
+                //console.log('json ' + JSON.stringify(json));
                 if (json.response.groups) {
                     console.log(json);
                     this.setState({
@@ -111,10 +111,10 @@ class MainComponent extends Component {
 
         if (mapRegion) {
             return (
-                <Screen>
-                    <RecommendationsMap {...this.state}
-                        onRegionChange={this.onRegionChange.bind(this)} />
-                </Screen>
+
+                <RecommendationsMap {...this.state}
+                    onRegionChange={this.onRegionChange.bind(this)} />
+
             );
         } else {
             return (

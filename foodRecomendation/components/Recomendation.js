@@ -21,25 +21,24 @@ export default class Recommendation extends Component {
             longitude: -76.5325021,
         };
         const { venue, tips, index } = this.props;
-        /*const coords = {
+        const coords = {
             latitude: venue.location.lat,
             longitude: venue.location.lng
-        };*/
-
+        };
         return (
 
             <MapView.Marker
-                coordinate={coordinate1}
+                coordinate={coords}
                 title={"marker"}
                 description={"desss"}>
 
                 <MapView.Callout>
                     <Card>
                         <Image styleName="medium-wide"
-                            source={{ uri: 'https://shoutem.github.io/img/ui-toolkit/examples/image-10.png' }} />
+                            source={{ uri: this.photo }} />
                         <View styleName="content">
-                            <Subtitle>SUBTITULO</Subtitle>
-                            <Caption>LoremIpsum caption adadjadhahdkajad</Caption>
+                            <Subtitle>{venue.name}</Subtitle>
+                            <Caption>{tips ? tips[0].text : ''}</Caption>
                         </View>
                     </Card>
                 </MapView.Callout>
