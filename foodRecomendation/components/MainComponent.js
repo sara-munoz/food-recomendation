@@ -5,12 +5,13 @@ import { Constants, Location, Permissions } from 'expo';
 import { Platform, Text, View, StyleSheet } from 'react-native';
 import styles from './styles';
 import RecommendationsMap from './RecommendationsMap';
+import { OverlayTopics, BottomTopics } from './Topics';
 
 
 const CLIENT_ID = '1240MVXTKU0CKWB1MHPUVUFB0OURNQPL5S3TICGBW20JIXND';
 const CLIENT_SECRET = 'Y3CFSGHRV23CKPBI34IZIE4ENGSW3CHDMCYCUDYA01NQMBVM';
 const FOURSQUARE_ENDPOINT = 'https://api.foursquare.com/v2/venues/explore';
-const API_DEBOUNCE_TIME = 10000;
+const API_DEBOUNCE_TIME = 20000;
 
 class MainComponent extends Component {
     state = {
@@ -48,7 +49,7 @@ class MainComponent extends Component {
 
     onRegionChange(region, gpsAccuracy) {
         console.log('on region change');
-        this.fetchVenues(region, 'food');
+        this.fetchVenues(region);
         this.setState({
             mapRegion: region,
             gpsAccuracy: gpsAccuracy || this.state.gpsAccuracy
@@ -81,7 +82,7 @@ class MainComponent extends Component {
             .catch(err => console.log(err));
     }
 
-    //API calling every 2 seconds 
+    //API calling every 20 seconds 
     shouldFetchVenues(lookingFor) {
         return lookingFor != this.state.lookingFor
             || this.state.last4sqCall === null
@@ -103,6 +104,13 @@ class MainComponent extends Component {
         });
     }
 
+    onTopicSelect(lookingFor) {
+        this.fetchVenues(this.state.mapRegion, lookingFor);
+        this.setState({
+            lookingFor: lookingFor
+        });
+    }
+
     render() {
         const { mapRegion, lookingFor } = this.state;
         if (mapRegion !== undefined || mapRegion !== null) {
@@ -111,10 +119,12 @@ class MainComponent extends Component {
 
         if (mapRegion) {
             return (
-
-                <RecommendationsMap {...this.state}
-                    onRegionChange={this.onRegionChange.bind(this)} />
-
+                <Screen>
+                    <RecommendationsMap {...this.state}
+                        onRegionChange={this.onRegionChange.bind(this)} />
+                    {!lookingFor ? <OverlayTopics onTopicSelect={this.onTopicSelect.bind(this)} />
+                        : <BottomTopics onTopicSelect={this.onTopicSelect.bind(this)} />}
+                </Screen>
             );
         } else {
             return (

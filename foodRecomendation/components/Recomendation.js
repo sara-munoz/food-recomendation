@@ -9,24 +9,20 @@ export default class Recommendation extends Component {
         if (photoArray !== undefined) {
             if (photoArray.length > 0) {
                 const photo = photoArray.items[0];
+                console.log(photo);
                 return `${photo.prefix}300x500${photo.suffix}`;
             }
         }
     }
 
     render() {
-
-        const coordinate1 = {
-            latitude: 3.3752639,
-            longitude: -76.5325021,
-        };
         const { venue, tips, index } = this.props;
         const coords = {
             latitude: venue.location.lat,
             longitude: venue.location.lng
         };
+        console.log(this.photo);
         return (
-
             <MapView.Marker
                 coordinate={coords}
                 title={"marker"}
